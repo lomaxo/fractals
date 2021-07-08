@@ -6,7 +6,7 @@ class Sierpinski:
         # Triangle
         self.width = side_length
         self.height = int(side_length*3**0.5//2)
-        self.image = Image.new('HSV', (self.width, self.height))
+        self.image = Image.new('HSV', (self.width+1, self.height+1))
         self.corners = [(0, self.height), (self.width, self.height), (self.width/2, 0)]
         
         """
