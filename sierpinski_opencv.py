@@ -18,7 +18,6 @@ class Sierpinski:
         new_point = int((random_corner[0] + self.current_point[0]) // 2) , int((random_corner[1] + self.current_point[1]) // 2)
         self.grid[new_point] = (255, 255, 255)
         self.current_point = new_point
-        print(self.grid)
 
     def get_image(self):
         return self.image
@@ -28,7 +27,8 @@ sier = Sierpinski(1000)
 while True:    
     # Get a numpy array to display from the simulation
     npimage=sier.grid
-    sier.calc_next_point()
+    for _ in range(1000):
+        sier.calc_next_point()
     cv2.imshow('image',npimage)
     if cv2.waitKey(1) == ord('q'):
         break
