@@ -47,19 +47,28 @@ def demo_image():
     image.convert('RGB').save('mandelbrot.png')
 
 
-def animate():
+def animate(focus_x, focus_y, zoom_rate, frames):
     mandelbrot = Mandelbrot()
     x1 = -2.25
     x2 = .25
     y1 = -1.5
     y2 = 1.5
-
-    for i in range(3):
-        x1 = x1 / 2
-        x2 = x2 / 2
-        y1 = y1 / 2
-        y2 = y2 / 2
-        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, width=500, height=500)
-        image.show()
-
-demo_image()
+    images = []
+    print("Generating frames:")
+    for i in range(frames):
+        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, max_i=105, width=500, height=500)
+        #image.show()
+        #image.convert('RGB')
+        images.append(image)
+        x1 = ((x1 - focus_x) / zoom_rate) + focus_x
+        x2 = ((x2 - focus_x) / zoom_rate) + focus_x
+        y1 = ((y1 - focus_y) / zoom_rate) + focus_y
+        y2 = ((y2 - focus_y) / zoom_rate) + focus_y
+        pc_complete = (i+1)/frames*100
+        if int(pc_complete) % 10 == 0:
+            print(f'\n{pc_complete:.0f}%', flush=True, end='')
+        else:
+            print('.', end='', flush=True)
+    images[0].save('out.gif', save_all=True, append_images=images[1:], loop=0)
+    print('\nDone.')
+animate(-1.5, 0, 1.5, 80)
