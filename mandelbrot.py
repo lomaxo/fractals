@@ -40,9 +40,26 @@ class Mandelbrot:
             a += a_range / width
         return image
 
+def demo_image():
+    mandelbrot = Mandelbrot()
+    image = mandelbrot.calculate_values(width=500, height=500)
+    image.show()
+    image.convert('RGB').save('mandelbrot.png')
 
 
-mandelbrot = Mandelbrot()
-image = mandelbrot.calculate_values(width=500, height=500)
-image.show()
-image.convert('RGB').save('mandelbrot.png')
+def animate():
+    mandelbrot = Mandelbrot()
+    x1 = -2.25
+    x2 = .25
+    y1 = -1.5
+    y2 = 1.5
+
+    for i in range(3):
+        x1 = x1 / 2
+        x2 = x2 / 2
+        y1 = y1 / 2
+        y2 = y2 / 2
+        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, width=500, height=500)
+        image.show()
+
+demo_image()
