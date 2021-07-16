@@ -27,6 +27,7 @@ class Mandelbrot:
         a_range = a_max - a_min
         b_range = b_max - b_min
         # pixels = []
+        """
         a = a_min
         while a < a_max:
             b = b_min
@@ -38,7 +39,17 @@ class Mandelbrot:
                 image.putpixel((x, y), colour)
                 b += b_range / height
             a += a_range / width
+        """
+        for x in range(width):
+            for y in range(height):
+                a = (x/width) * a_range + a_min
+                b = (y/height) * b_range + b_min
+                n = self.count_divergence(complex(a, b), max_i)
+                colour = (n, 200, 200) if n < max_i else (0, 100, 0)
+                image.putpixel((x, y), colour)
         return image
+
+
 
 def demo_image():
     mandelbrot = Mandelbrot()
@@ -56,7 +67,7 @@ def animate(focus_x, focus_y, zoom_rate, frames):
     images = []
     print("Generating frames:")
     for i in range(frames):
-        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, max_i=105, width=500, height=500)
+        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, max_i=105, width=100, height=100)
         #image.show()
         #image.convert('RGB')
         images.append(image)
@@ -71,4 +82,5 @@ def animate(focus_x, focus_y, zoom_rate, frames):
             print('.', end='', flush=True)
     images[0].save('out.gif', save_all=True, append_images=images[1:], loop=0)
     print('\nDone.')
-animate(-1.5, 0, 1.5, 80)
+animate(-1.5, 0, 1.5, 100)
+#demo_image()
