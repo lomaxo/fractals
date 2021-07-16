@@ -26,20 +26,7 @@ class Mandelbrot:
         image = Image.new('HSV', (width, height))
         a_range = a_max - a_min
         b_range = b_max - b_min
-        # pixels = []
-        """
-        a = a_min
-        while a < a_max:
-            b = b_min
-            while b < b_max:
-                x = int((a - a_min) / a_range * width)
-                y = int((b - b_min) / b_range * height)
-                n = self.count_divergence(complex(a, b), max_i)
-                colour = (n, 200, 200) if n < max_i else (0, 100, 0)
-                image.putpixel((x, y), colour)
-                b += b_range / height
-            a += a_range / width
-        """
+
         for x in range(width):
             for y in range(height):
                 a = (x/width) * a_range + a_min
@@ -58,7 +45,7 @@ def demo_image():
     image.convert('RGB').save('mandelbrot.png')
 
 
-def animate(focus_x, focus_y, zoom_rate, frames):
+def animate(focus_x, focus_y, zoom_rate, width, height, frames, out_file='out.gif'):
     mandelbrot = Mandelbrot()
     x1 = -2.25
     x2 = .25
@@ -67,7 +54,7 @@ def animate(focus_x, focus_y, zoom_rate, frames):
     images = []
     print("Generating frames:")
     for i in range(frames):
-        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, max_i=105, width=100, height=100)
+        image = mandelbrot.calculate_values(a_min=x1, a_max=x2, b_min=y1, b_max=y2, max_i=105, width=width, height=height)
         #image.show()
         #image.convert('RGB')
         images.append(image)
@@ -80,7 +67,7 @@ def animate(focus_x, focus_y, zoom_rate, frames):
             print(f'\n{pc_complete:.0f}%', flush=True, end='')
         else:
             print('.', end='', flush=True)
-    images[0].save('out.gif', save_all=True, append_images=images[1:], loop=0)
-    print('\nDone.')
-animate(-1.5, 0, 1.5, 100)
+    images[0].save(out_file, save_all=True, append_images=images[1:], loop=0)
+    print(f'\nCreate {out_file}.')
+animate(-1.5, 0, 1.5, 100, 100, 100)
 #demo_image()
