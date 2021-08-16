@@ -3,11 +3,11 @@ import numpy as np
 
 
 class KochCurve():
-    def __init__(self, initial_line, depth):
+    def __init__(self, initial_line, depth, fill = (200, 200, 200)):
         self.initial_line = initial_line#[np.array(initial_line[0]), np.array(initial_line[1])]
         self.depth = depth
-        self.image = Image.new('HSV', (2000, 2000))
-        
+        self.image = Image.new('RGB', (2000, 2000))
+        self.fill = fill
         self.draw = ImageDraw.Draw(self.image)
 
     def q1_curve(self, start_point, end_point):
@@ -33,10 +33,11 @@ class KochCurve():
         b = tuple(start_point + v)
         c = tuple(np.array(b) + v2)
         d = tuple(c + v)
-        e = tuple(np.array(d) - 2*v2)
-        f = tuple(e + v)
-        g = tuple(f+v2)
-        h = end_point
+        e = tuple(np.array(d) - v2)
+        f = tuple(np.array(e) - v2)
+        g = tuple(f + v)
+        h = tuple(g+v2)
+        i = end_point
         end_point
         lines = [[a, b]]
         lines.append([b,c])
@@ -45,14 +46,14 @@ class KochCurve():
         lines.append([e,f])
         lines.append([f,g])
         lines.append([g,h])
-
+        lines.append([h,i])
         return lines
 
     def draw_segment(self, start_point, end_point, depth):
         lines = self.q2_curve(start_point, end_point)
         for line in lines:
             if depth <= 0:
-                self.draw.line(line, fill=(100, 100, 200)),
+                self.draw.line(line, fill=self.fill),
             else:
                 self.draw_segment(line[0], line[1], depth-1)
 
