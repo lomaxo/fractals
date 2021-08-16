@@ -17,7 +17,6 @@ class KochCurve():
         c = tuple(np.array(b) + np.array([v[1], -v[0]]) + v/2 )
         d = tuple(end_point - v)
         e = end_point
-        end_point
         lines = [[a, b]]
         lines.append([b,c])
         lines.append([c,d])
@@ -33,7 +32,6 @@ class KochCurve():
         d = tuple(c + v)
         e = tuple(end_point - v)
         f = end_point
-        end_point
         lines = [[a, b]]
         lines.append([b,c])
         lines.append([c,d])
@@ -53,7 +51,6 @@ class KochCurve():
         g = tuple(f + v)
         h = tuple(g+v2)
         i = end_point
-        end_point
         lines = [[a, b]]
         lines.append([b,c])
         lines.append([c,d])
