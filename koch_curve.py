@@ -10,6 +10,21 @@ class KochCurve():
         self.fill = fill
         self.draw = ImageDraw.Draw(self.image)
 
+    def snowflake_curve(self, start_point, end_point):
+        v = (np.array(end_point) - np.array(start_point))/3
+        a = start_point
+        b = tuple(start_point + v)
+        c = tuple(np.array(b) + np.array([v[1], -v[0]]) + v/2 )
+        d = tuple(end_point - v)
+        e = end_point
+        end_point
+        lines = [[a, b]]
+        lines.append([b,c])
+        lines.append([c,d])
+        lines.append([d,e])
+        return lines
+
+
     def q1_curve(self, start_point, end_point):
         v = (np.array(end_point) - np.array(start_point))/3
         a = start_point
@@ -50,7 +65,7 @@ class KochCurve():
         return lines
 
     def draw_segment(self, start_point, end_point, depth):
-        lines = self.q2_curve(start_point, end_point)
+        lines = self.snowflake_curve(start_point, end_point)
         for line in lines:
             if depth <= 0:
                 self.draw.line(line, fill=self.fill),
@@ -62,5 +77,6 @@ class KochCurve():
             self.draw_segment(self.initial_line[i], self.initial_line[i+1], self.depth)
         return self.image
 
-curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 2)
+# curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 0)
+curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), 3)
 curve.get_image().show()

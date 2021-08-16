@@ -12,6 +12,10 @@
 - Explanation why it works: <https://en.wikipedia.org/wiki/Chaos_game>
 - Extend to other shapes...
 
+## Koch Curve
+
+- <https://en.wikipedia.org/wiki/Koch_snowflake>
+
 ## Barnsley Fern
 
 - Similar random technique for drawing it
