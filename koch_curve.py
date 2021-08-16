@@ -51,18 +51,15 @@ class KochCurve():
     def draw_segment(self, start_point, end_point, depth):
         lines = self.q2_curve(start_point, end_point)
         for line in lines:
-            #print(line)
             if depth <= 0:
                 self.draw.line(line, fill=(100, 100, 200)),
             else:
                 self.draw_segment(line[0], line[1], depth-1)
-        #self.draw.line((start_point, end_point), fill=(100, 100, 200)) 
 
     def get_image(self):
-        #print(self.initial_line)   
-        self.draw_segment(self.initial_line[0], self.initial_line[1], self.depth)
-        #self.draw.line(self.initial_line, fill=(100, 100, 200)) 
+        for i in range(len(self.initial_line)-1):
+            self.draw_segment(self.initial_line[i], self.initial_line[i+1], self.depth)
         return self.image
 
-curve = KochCurve(((100, 1000), (1800, 1000)), 5)
+curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 2)
 curve.get_image().show()
