@@ -3,8 +3,12 @@ import numpy as np
 
 
 class KochCurve():
-    def __init__(self, initial_line, depth, fill = (200, 200, 200)):
-        self.initial_line = initial_line#[np.array(initial_line[0]), np.array(initial_line[1])]
+    def __init__(self, initial_line, depth, fill = (200, 200, 200), curve_func = None):
+        self.initial_line = initial_line
+        if curve_func == None:
+            self.curve_func = KochCurve.q1_curve
+        else:
+            self.curve_func = curve_func
         self.depth = depth
         self.image = Image.new('RGB', (2000, 2000))
         self.fill = fill
@@ -62,7 +66,7 @@ class KochCurve():
         return lines
 
     def draw_segment(self, start_point, end_point, depth):
-        lines = self.snowflake_curve(start_point, end_point)
+        lines = self.curve_func(self, start_point, end_point)
         for line in lines:
             if depth <= 0:
                 self.draw.line(line, fill=self.fill),
@@ -74,6 +78,7 @@ class KochCurve():
             self.draw_segment(self.initial_line[i], self.initial_line[i+1], self.depth)
         return self.image
 
-# curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 0)
-curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), 3)
+# curve = KochCurve(((400, 1000), (1600, 1000)), 2)
+# curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 0, curve_func=KochCurve.q2_curve)
+curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), 0, curve_func=KochCurve.snowflake_curve)
 curve.get_image().show()
