@@ -10,15 +10,13 @@ class KochCurve():
         
         self.draw = ImageDraw.Draw(self.image)
 
-    def draw_segment(self, start_point, end_point, depth):
-        v = np.array(end_point) - np.array(start_point)
-        #print(start_point)
-        #print(list(v + start_point))   
+    def q1_curve(self, start_point, end_point):
+        v = (np.array(end_point) - np.array(start_point))/3
         a = start_point
-        b = tuple(start_point + v/3)
-        c = tuple(np.array(b) + np.array([(v/3)[1], (-v/3)[0]]) )
-        d = tuple(c + v/3)
-        e = tuple(end_point - v/3)
+        b = tuple(start_point + v)
+        c = tuple(np.array(b) + np.array([v[1], -v[0]]) )
+        d = tuple(c + v)
+        e = tuple(end_point - v)
         f = end_point
         end_point
         lines = [[a, b]]
@@ -26,6 +24,32 @@ class KochCurve():
         lines.append([c,d])
         lines.append([d,e])
         lines.append([e,f])
+        return lines
+
+    def q2_curve(self, start_point, end_point):
+        v = (np.array(end_point) - np.array(start_point))/4
+        v2 = (np.array([v[1], -v[0]])) 
+        a = start_point
+        b = tuple(start_point + v)
+        c = tuple(np.array(b) + v2)
+        d = tuple(c + v)
+        e = tuple(np.array(d) - 2*v2)
+        f = tuple(e + v)
+        g = tuple(f+v2)
+        h = end_point
+        end_point
+        lines = [[a, b]]
+        lines.append([b,c])
+        lines.append([c,d])
+        lines.append([d,e])
+        lines.append([e,f])
+        lines.append([f,g])
+        lines.append([g,h])
+
+        return lines
+
+    def draw_segment(self, start_point, end_point, depth):
+        lines = self.q2_curve(start_point, end_point)
         for line in lines:
             #print(line)
             if depth <= 0:
