@@ -11,7 +11,7 @@ class Sierpinski:
         self.corners = [(0, self.height), (self.width, self.height), (self.width/2, 0)]
         
         self.current_point = random.choice(self.corners)
-        self.grid = np.zeros(shape=(self.width+1,self.height+1, 3))
+        self.grid = np.zeros(shape=(self.width+1, self.height+1, 3))
 
     def calc_next_point(self):
         random_corner = random.choice(self.corners)
@@ -26,9 +26,9 @@ sier = Sierpinski(1000)
 
 while True:    
     # Get a numpy array to display from the simulation
-    npimage=sier.grid
+    npimage = sier.grid
     for _ in range(1):
         sier.calc_next_point()
-    cv2.imshow('image',npimage)
+    cv2.imshow('image', npimage)
     if cv2.waitKey(1) == ord('q'):
         break
