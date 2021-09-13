@@ -27,7 +27,7 @@ sier = Sierpinski(1000)
 while True:    
     # Get a numpy array to display from the simulation
     npimage=sier.grid
-    for _ in range(1000):
+    for _ in range(1):
         sier.calc_next_point()
     cv2.imshow('image',npimage)
     if cv2.waitKey(1) == ord('q'):
