@@ -93,7 +93,7 @@ Create a KochCurve class:
 ```python
 from PIL import Image, ImageDraw
 class KochCurve():
-    def __init__(self, initial_line, depth, fill = (200, 200, 200)):
+    def __init__(self, initial_line, depth):
         self.initial_line = initial_line
         self.depth = depth
         self.image = Image.new('RGB', (2000, 2000))
