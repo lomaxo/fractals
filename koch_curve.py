@@ -78,7 +78,14 @@ class KochCurve():
             self.draw_segment(self.initial_line[i], self.initial_line[i+1], self.depth)
         return self.image
 
-# curve = KochCurve(((400, 1000), (1600, 1000)), 2)
+curve = KochCurve(((400, 1000), (1600, 400)), 0)
 # curve = KochCurve(((400, 400), (1600, 400), (1600, 1600), (400, 1600), (400, 400)), 0, curve_func=KochCurve.q2_curve)
-curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), 0, curve_func=KochCurve.snowflake_curve)
+# curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), 4, curve_func=KochCurve.snowflake_curve)
 curve.get_image().show()
+
+#
+# for i in range(5):
+#     curve = KochCurve(((400, 1600), (1000, 400), (1600, 1600), (400, 1600)), i, curve_func=KochCurve.snowflake_curve)
+#     image = curve.get_image()
+#     filename = f'koch/snowflake.{i}.png'
+#     image.save(filename, 'PNG')
