@@ -40,7 +40,7 @@ class Mandelbrot:
 
 def demo_image():
     mandelbrot = Mandelbrot()
-    image = mandelbrot.calculate_values(width=500, height=500)
+    image = mandelbrot.calculate_values(width=500, height=500, max_i=255)
     image.show()
     image.convert('RGB').save('mandelbrot.png')
 
@@ -71,5 +71,5 @@ def animate(focus_x, focus_y, zoom_rate, width, height, frames, out_file='out.gi
     print(f'\nCreate {out_file}.')
 
 
-animate(-1.5, 0, 1.5, 100, 100, 100)
-#demo_image()
+# animate(-1.5, 0, 1.5, 100, 100, 100)
+demo_image()

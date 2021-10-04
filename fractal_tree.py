@@ -43,7 +43,7 @@ class FractalTree():
             b = list(map(int, p[1]))
             # h, s, v = pixels[tuple(b)]
             # print(a,b)
-            draw.line(a + b, fill=(100, 100, 200), width=20-int(i/len(self.branches)*20))
+            draw.line(a + b, fill=(100, 100, 200), width=10)
         return image
 
 
