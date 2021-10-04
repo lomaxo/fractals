@@ -155,5 +155,49 @@ If depth > 0 we want to instead draw a smaller segment where each line would go,
 
 ## Fractal Trees
 
+Start with a line, the initial branch. Each branch splits into two similar but shorter branches, that are directed a 
+certain angle either side of the parent branch.
+
+### Generate a list of child branches
+A `gen_branches()` method takes a line, defined by two points, and returns the coordinates for the two child branches.
+![](fractal_tree_example.png)
+
+```python
+    def gen_branches(self, prev_point, current_point, scaling, angle):
+        next_points = []
+        v = (current_point - prev_point) * scaling
+        # angle += (random.random()-0.5)*np.pi/8
+        rotation1 = np.array([[np.cos(angle), -np.sin(angle)],[np.sin(angle), np.cos(angle)]])
+        rotation2 = np.array([[np.cos(-angle), -np.sin(-angle)],[np.sin(-angle), np.cos(-angle)]])
+        # next_points.append((current_point, current_point+v))
+        next_points.append((current_point, current_point+rotation1.dot(v)))
+        next_points.append((current_point, current_point+rotation2.dot(v)))
+        # next_points.append(random.choice([(current_point, current_point+rotation1.dot(v)), (current_point, current_point+rotation2.dot(v))]))
+        return next_points
+```
+- The scaling factor makes each set of child branches smaller than the last.
+- The angle argument determines the angle that each child branch should 
+
+NB: The `next_points` list that is returned is a list of tuples. Each tuple contains the start and end coordinates of a line.
+Each set of coordinates is itself a tuple containing x and y values.
+
+### Recursion to build a whole tree
+There is also an `extend_branch()` method that calls `gen_branches()` to get a list of new branches, but then recursively 
+calls itself, for each new branch, to create further child branches. 
+
+- The depth argument is reduced by 1 each time so that we can specify how many recursions there should be.
+
+
+```python
+    def extend_branch(self, initial_line, depth, scaling, angle):
+        if depth == 0:
+            return
+
+        new_branches = self.gen_branches(initial_line[0], initial_line[1], scaling, angle)
+        self.branches += new_branches
+        for branch in new_branches:
+            self.extend_branch(branch, depth - 1, scaling, angle)
+```
+
 - Basic idea
 - Using recursion
