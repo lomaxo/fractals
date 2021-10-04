@@ -48,4 +48,7 @@ class FractalTree():
 
 
 tree = FractalTree(((1000, 2000), (1000, 1600)), 0.75, np.pi/7, 7)
-tree.get_image().show()
+image = tree.get_image()
+image.show()
+image = image.convert('RGB')
+image.save('images/fractal_tree_example.png', 'PNG')
