@@ -31,18 +31,14 @@ class FractalTree():
         for branch in new_branches:
             self.extend_branch(branch, depth - 1, scaling, angle)
 
-
     def get_image(self):
         image = Image.new('HSV', (2000, 2000))
         image.putpixel((100, 100), (255, 255,255))
         draw = ImageDraw.Draw(image)
-        # pixels = image.load()
         self.extend_branch(self.initial_line, self.depth, self.scale_factor, self.angle)
-        for i, p in enumerate(self.branches):
+        for p in self.branches:
             a = list(map(int, p[0]))
             b = list(map(int, p[1]))
-            # h, s, v = pixels[tuple(b)]
-            # print(a,b)
             draw.line(a + b, fill=(100, 100, 200), width=10)
         return image
 

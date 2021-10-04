@@ -157,10 +157,29 @@ If depth > 0 we want to instead draw a smaller segment where each line would go,
 
 Start with a line, the initial branch. Each branch splits into two similar but shorter branches, that are directed a 
 certain angle either side of the parent branch.
+![Fractal Tree Example](images/fractal_tree_example.png)
+
+### The FractalTree class
+
+```python
+class FractalTree():
+    def __init__(self, initial_line, scale_factor, angle, depth):
+        self.angle = angle
+        self.initial_line = [np.array(initial_line[0]), np.array(initial_line[1])]
+        self.scale_factor = scale_factor
+        self.depth = depth
+        self.branches = [initial_line]
+```
+| Property | Description|
+|---|---|
+|initial_line | Two pairs of coordinates that specify the  starting branch of the tree. Each pair gets converted into a numpy array to make dealing with them easier later on. |
+| scale factor | How much smaller each child branch is than its parent. |
+| angle | The angle by which each child branch deviates from its parent. |
+| depth | The number of times to recursively iterate, ie how many times the branch deivdes before stopping. |
+| branches | A list of the trees branches. This starts with only the initial line, but more will be calcualted |
 
 ### Generate a list of child branches
 A `gen_branches()` method takes a line, defined by two points, and returns the coordinates for the two child branches.
-![Fractal Tree Example](images/fractal_tree_example.png)
 
 ```python
     def gen_branches(self, prev_point, current_point, scaling, angle):
@@ -186,8 +205,7 @@ There is also an `extend_branch()` method that calls `gen_branches()` to get a l
 calls itself, for each new branch, to create further child branches. 
 
 - The depth argument is reduced by 1 each time so that we can specify how many recursions there should be.
-
-
+- The scaling and angle arguments are simply passed on to the `gen_braches()` method
 ```python
     def extend_branch(self, initial_line, depth, scaling, angle):
         if depth == 0:
@@ -199,5 +217,34 @@ calls itself, for each new branch, to create further child branches.
             self.extend_branch(branch, depth - 1, scaling, angle)
 ```
 
-- Basic idea
-- Using recursion
+### Display the tree
+Finally, we just need to loop through all the pairs of coordinates, convert them to int and ask Pillow to draw the lines:
+```python
+    def get_image(self):
+        image = Image.new('HSV', (2000, 2000))
+        image.putpixel((100, 100), (255, 255,255))
+        draw = ImageDraw.Draw(image)
+        self.extend_branch(self.initial_line, self.depth, self.scale_factor, self.angle)
+        for p in self.branches:
+            a = list(map(int, p[0]))
+            b = list(map(int, p[1]))
+            draw.line(a + b, fill=(100, 100, 200), width=10)
+        return image
+```
+To actually create the tree and display it:
+```python
+tree = FractalTree(((1000, 2000), (1000, 1600)), 0.75, np.pi/7, 7)
+image = tree.get_image()
+image.show()
+```
+The parameters here are:
+- A tuple containing two pairs of coordinates defining the start and end point of the first branch ((1000, 2000), (1000, 1600))
+- The scaling factor, ie each child branch will be 75% the length of it's parent
+- The angle by each child branch should deviate from its parent .
+- The depth or number of recursion iterations
+
+### Things to try:
+- Change the angle to draw wider or taller trees. Large angles produce some strange effects...
+- Experiment with the depth and scaling factor.
+- Add some randomness to the angle and the scaling each time to make more natural looking trees.
+- Make the tree get thinner as it gets taller.
