@@ -160,7 +160,7 @@ certain angle either side of the parent branch.
 
 ### Generate a list of child branches
 A `gen_branches()` method takes a line, defined by two points, and returns the coordinates for the two child branches.
-![Fractal Tree Example](./fractal_tree_example.png)
+![Fractal Tree Example](factals/fractal_tree_example.png)
 
 ```python
     def gen_branches(self, prev_point, current_point, scaling, angle):
