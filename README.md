@@ -141,12 +141,12 @@ If depth > 0 we want to instead draw a smaller segment where each line would go,
 
 
 ## Barnsley Fern
-
+![Barnsley Fern](images/barnsley_fern.png)
 - Similar random technique for drawing it
 - Using separate arrays for data and image
 
 ## Mandelbrot
-
+![Mandelbrot Image](images/mandelbrot.png)
 - Explanation of the technique (see numberphile/computerphile video?)
 - Full image (b&w)
 - Add colour
